@@ -1,11 +1,37 @@
-server:
-  port: ${PORT:5000}
+spring:
+  application:
+    name: openwms-config
+security:
+  user:
+    password: sa
+encrypt:
+  keyStore:
+    location: classpath:/server.jks
+    alias: livekey
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${owms.eureka.url}/eureka/
+  instance:
+    secure-port-enabled: false
+    non-secure-port-enabled: true
+    metadata-map:
+      username: user
+      password: ${security.user.password}
+
+---
+spring:
+  profiles: CLOUD
+
+security:
+  user: 'admin'
+    password: 'admin'
+
 eureka:
   instance:
-    hostname: pilae
-  client:
-    registerWithEureka: false
-    fetchRegistry: false
-    serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-  password: ${EUREKA_USER_PASSWORD:password}
+    hostname: openwms-configuration.herokuapp.com
+    secure-port-enabled: true
+    non-secure-port-enabled: false
+    statusPageUrl: https://${eureka.instance.hostName}/info
+    healthCheckUrl: https://${eureka.instance.hostName}/health
+    homePageUrl: https://${eureka.instance.hostName}/
