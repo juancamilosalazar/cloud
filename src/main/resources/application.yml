@@ -4,6 +4,3 @@ eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
-  instance:
-    statusPageUrlPath: $ {server.servletPath} / info
-    healthCheckUrlPath: $ {server.servletPath} / health
